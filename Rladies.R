@@ -205,28 +205,23 @@ ggsave("mapaRLadies10.png",width = 10, height = 5, dpi = "retina")
 p <-ggplotly(mapaRladies, hoverformat='2.F', tooltip = "text")
 p
 
+
+#revisar
 plot_geo(mapaRladies,
          marker = list(color = toRGB("purple"),
                        opacity = 0.5,
                        line = list(color = toRGB("#88398A"),
                                    width = 1.5))) %>%
-  add_markers(x = ~longitud,
+add_markers(x = ~longitud,
               y = ~latitud,
               sizes = c(1, 450),
               size = ~miembros,
               hoverinfo = "text",
               text = ~paste text = paste('Ciudad: ', ciudad,
-                                         '<br /> Miembros : ', miembros),
+                                         '<br /> Miembros : ', miembros))
               #'<br /> Creado : ', creacion), %>%
-              layout(geo = g)
-              #-------------------------------------
-              # Animacion
-              #------------------------------------
-              library(gganimate)
-              mapaRladies+
-                transition_time(miembros) +
-                ease_aes('linear')+
-                shadow_mark(alpha = 1, size = 2)
+             
+
 #-------------------------------------
 #animacion
 #------------------------------------
@@ -238,4 +233,3 @@ transition_time(miembros) +
 
 gganimate(map7, interval = .2, filename = 'rladies.gif')
 #-------------------------------------------------------
-creada = as.Date('creacion'),
