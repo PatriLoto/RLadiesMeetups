@@ -1,5 +1,5 @@
 #Importo librerías
-
+install.packages("magick")
 library(extrafont)
 loadfonts(dev = "win")
 library(tidyverse)
@@ -10,7 +10,7 @@ library(maps)
 library(plotly)
 library(mapproj)
 library(gganimate)
-
+library(magick)
 #Lectura de datos
 capitulos_rladies <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-06-26/capitulos_rladies.csv")
 eventos_rladies <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-06-26/eventos_rladies.csv")
@@ -47,8 +47,8 @@ View(wes_colores)
 mapaRladies <- mundo +
   geom_point(aes(x = longitud, y = latitud,
                  text = paste('Ciudad: ', ciudad,
-                              '<br /> Miembros : ', miembros,
-                              '<br /> Creado : ', creacion),
+                              '<br /> Miembros : ', miembros),
+                              #'<br /> Creado : ', creacion),
                  size = miembros), data = capitulos_rladies, colour = "#88398A", alpha = .5)  +     #562457#88398A  #alpha = .5
   scale_size_continuous(range = c(1, 10), breaks = c(250, 500, 750, 1000,1250,1500,1750,2000)) +
   # scale_color_continuous(option="purple", trans="log", breaks=c(250, 500, 750, 1000,1250,1500,1750,2000)) +
@@ -61,7 +61,7 @@ mapaRladies <- mundo +
         legend.background = element_rect(fill = "#D3DDDC", colour =NA),  #colour = #446455=, "#miembros"
         panel.background = element_rect(fill = "#D3DDDC", colour =NA),
         plot.background = element_rect(fill = "#D3DDDC", colour = "#D3DDDC"),
-        plot.title = element_text(colour = wes_palette("GrandBudapest1")[2], size = 22, hjust = 0.5, family = "FuturaBT-ExtraBlack", face="bold"),#wes_palette("GrandBudapest1")[2]
+        plot.title = element_text(colour = wes_palette("GrandBudapest1")[2], size = 22, hjust = 0.5, family = "FuturaBT-ExtraBlack", face="bold"),        #wes_palette("GrandBudapest1")[2]
         plot.subtitle = element_text(colour = "#446455", size = 14, hjust = 0.5,family = "FuturaBT-ExtraBlack", face="italic"),
         plot.caption = element_text(colour =  wes_palette("GrandBudapest1")[2], size = 10, hjust = 0.5,face="bold", vjust=1))+
   labs(title = toupper("Rladies en el mundo"),
@@ -70,11 +70,35 @@ mapaRladies <- mundo +
 
 mapaRladies
 ggsave("mapaRLadiesFinal.png",width = 10, height = 5, dpi = "retina")
-#----------------------------------------------
-# Plotly, muestra ciudad y nro de miembros
-#----------------------------------------------
+#-------------------------------------------------------------------
+# Plotly, muestra ciudad y nro de miembros - con fondo #ABDDDE
+#--------------------------------------------------------------------
+mapaRladies2 <- mundo +
+  geom_point(aes(x = longitud, y = latitud,
+                 text = paste('Ciudad: ', ciudad,
+                              '<br /> Miembros : ', miembros),
+                 #'<br /> Creado : ', creacion),
+                 size = miembros), data = capitulos_rladies, colour = "#88398A", alpha = .5)  +     #562457#88398A  #alpha = .5
+  scale_size_continuous(range = c(1, 10), breaks = c(250, 500, 750, 1000,1250,1500,1750,2000)) +
+  # scale_color_continuous(option="purple", trans="log", breaks=c(250, 500, 750, 1000,1250,1500,1750,2000)) +
+  theme_void() +
+  labs(size = '') +
+  theme(legend.position = "left",                
+        legend.text = element_text(colour ="#446455" , size = 8),
+        legend.title = element_text(colour = "#446455", size = 10),   #lila oscuro de RLadies="#446455"
+        legend.title.align = 1,
+        legend.background = element_rect(fill = wes_palette("Darjeeling2")[4], colour =NA),  #colour = #446455=, "#miembros"
+        panel.background = element_rect(fill = wes_palewes_palette("Darjeeling2")[4], colour = wes_palette("Darjeeling2")[4]),    #5BBCD6   85D4E3
+        plot.title = element_text(colour ="#562457" , size = 22, hjust = 0.5, family = "FuturaBT-ExtraBlack", face="bold"),	
+      
+        plot.subtitle = element_text(colour = "#446455", size = 14, hjust = 0.5,family = "FuturaBT-ExtraBlack", face="italic"),
+        plot.caption = element_text(colour =  wes_palette("GrandBudapest1")[2], size = 10, hjust = 0.5,face="bold", vjust=1))+
+  labs(title = toupper("Rladies en el mundo"),
+       subtitle = "Cantidad de miembros por capítulo hasta el 25 de junio del 2019",
+       caption = "#DatosDeMiercoles por Patricia Loto")
 
-p <-ggplotly(mapaRladies, hoverformat='2.F', tooltip = "text")
+mapaRladies2
+p <-ggplotly(mapaRladies2, hoverformat='2.F', tooltip = "text")
 p
 
 #-------------------------------------
@@ -86,5 +110,4 @@ library(gganimate)
   ease_aes('linear')+
   shadow_mark(alpha = 1, size = 2)
 
-gganimate(mapaRladies, interval = .2, filename = 'rladies.gif')
 #-------------------------------------------------------
