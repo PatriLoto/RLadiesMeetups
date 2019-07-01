@@ -1,8 +1,6 @@
-
+#Importo librerías
 library(extrafont)
 loadfonts(dev = "win")
-loadfonts(dev = "FuturaBT-ExtraBlack")
-
 library(tidyverse)
 library(ggforce)  
 library(ggthemes)
@@ -10,28 +8,30 @@ library(wesanderson)
 library(DT)
 library(maps)
 library(plotly)
-# install_packages("readr")
+
+#Lectura de datos
 capitulos_rladies <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-06-26/capitulos_rladies.csv")
 eventos_rladies <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-06-26/eventos_rladies.csv")
 
-#trae los datos como en una tabla
+#Muestro los datos en formato de tabla con el paquete DT
 datatable(capitulos_rladies, rownames = FALSE,
           options = list(pageLength = 10))
 
-
+#Ordeno por cantidad de miembros para determinar los valores de la escala
 datosordenados <-capitulos_rladies %>% arrange(desc(miembros))
 View(datosordenados)
 
-#con grises mÃ¡s claros
+# mapa con grises más claros
 world <- ggplot() +
   borders("world", colour = "gray85", fill = "gray80") +      #otra opcion:gray85 #562457
   theme_map()
 world
-#con bordes mÃ¡s oscuros
-world2 <- ggplot() +
+
+# mapa con bordes oscuros
+mundo <- ggplot() +
   borders("world", colour = "562457", fill = "gray80") +      #otra opcion:gray85 #562457
   theme_map()
-world2
+mundo
 
 #con bordes y relleno mÃ¡s oscuros
 world3 <- ggplot() +
@@ -39,29 +39,26 @@ world3 <- ggplot() +
   theme_map()
 world3
 
-#562457
 
-
-#colores de wes anderson
+#colores de las paletas wes anderson
 wes_palettes <- names(wesanderson::wes_palettes)
 
-# function to extract all colours for palettes along with palette name
+# extraigo los colores de todas las paletas de WesAnderson con ss correspondientes nombres (lo tomé del código de @committedtotape)
 wes_pal_func <- function(pal) {
   col_df <- tibble(colours = wes_palette(pal), palette = pal)
 }
 
 # create dataframe of all colours and palette names
-wes_colours <- map_df(wes_palettes, wes_pal_func)
+#wes_colours <- map_df(wes_palettes, wes_pal_func)
+#View(wes_colours)
 
-View(wes_colours)
+
+#rladies_Palette <- rev(wes_colours[c(1, 16, 23, 32, 37, 51, 65, 75, 82), ]$colours)
+#rladies_Palette
 
 
-rladies_Palette <- rev(wes_colours[c(1, 16, 23, 32, 37, 51, 65, 75, 82), ]$colours)
-rladies_Palette
-
-#a2e0c3
-actor_colour <- wes_colours[47, ]$colours
-actor_colour
+color_letra <- wes_colours[47, ]$colours   #a2e0c3
+color_letra
 #--------------------------
 #primer version
 # -------------------------
@@ -75,7 +72,7 @@ map <- world1 +
   labs(size = 'Miembros Meetups')
 
 ggsave("mapaRLadies.png",width = 10, height = 5, dpi = "retina")
-
+map
 #--------------------
 # segunda version
 #--------------------
@@ -88,16 +85,14 @@ map2 <- world +
              data = capitulos_rladies, colour = 'purple', alpha = .5) +
   scale_size_continuous(range = c(1, 8), breaks = c(250, 500, 750, 1000,1250,1500,1750,2000)) +
   labs(size = 'Miembros Meetups') +
-  # set theme of graph - use the futura font
-  #theme(background = wes_palette("Chevalier1")[3], foreground = NA, base_family = "FuturaBT-BoldCondensed") +
   # set all other themes and labels like any old ggplot
-  theme(#legend.text = element_text(colour = actor_colour, face = "bold", size = 12),
-        #legend.title = element_text(colour = actor_colour, face = "bold", size = 12),
+  theme(legend.text = element_text(colour = color_letra, face = "bold", size = 12),
+        legend.title = element_text(colour = color_letra, face = "bold", size = 12),
         legend.title.align = 1,
-        #legend.background = element_rect(colour = actor_colour, fill =  wes_palette("Chevalier1")[3]),
+        legend.background = element_rect(colour = color_letra, fill =  wes_palette("Chevalier1")[3]),
         plot.background = element_rect(fill = "#D3DDDC", colour = "#D3DDDC"),
         plot.title = element_text(colour = wes_palette("GrandBudapest1")[2], size = 22, hjust = 0.5, family = "FuturaBT-ExtraBlack"),
-        #plot.subtitle = element_text(colour = actor_colour, size = 16, hjust = 0.5),
+        plot.subtitle = element_text(colour = color_letra, size = 16, hjust = 0.5),
         plot.caption = element_text(colour =  wes_palette("GrandBudapest1")[2], size = 12, hjust = 0.5),
         plot.margin = margin(0.8, 0.1, 0.5, 0.1, "cm")) +
   labs(title = toupper("Rladies en el mundo"),
@@ -118,16 +113,16 @@ map3 <- world2 +
              data = capitulos_rladies, colour = 'purple', alpha = .5) +
   scale_size_continuous(range = c(1, 8), breaks = c(250, 500, 750, 1000,1250,1500,1750,2000)) +
   labs(size = 'Miembros Meetups') +
-  # set theme of graph - use the futura font
-  #theme(background = wes_palette("Chevalier1")[3], foreground = NA, base_family = "FuturaBT-BoldCondensed") +
+  
   # set all other themes and labels like any old ggplot
-  theme(#legend.text = element_text(colour = actor_colour, face = "bold", size = 12),
-    #legend.title = element_text(colour = actor_colour, face = "bold", size = 12),
+ 
+  theme(legend.text = element_text(colour = color_letra, face = "bold", size = 12),
+    legend.title = element_text(colour = color_letra, face = "bold", size = 12),
     legend.title.align = 1,
-    #legend.background = element_rect(colour = actor_colour, fill =  wes_palette("Chevalier1")[3]),
+    legend.background = element_rect(colour = color_letra, fill =  wes_palette("Chevalier1")[3]),
     plot.background = element_rect(fill = "#D3DDDC", colour = "#D3DDDC"),
     plot.title = element_text(colour = wes_palette("GrandBudapest1")[2], size = 22, hjust = 0.5, family = "FuturaBT-ExtraBlack"),
-   # plot.subtitle = element_text(colour = actor_colour, size = 16, hjust = 0.5),
+    plot.subtitle = element_text(colour = color_letra, size = 16, hjust = 0.5),
     plot.caption = element_text(colour =  wes_palette("GrandBudapest1")[2], size = 12, hjust = 0.5),
     plot.margin = margin(0.8, 0.1, 0.5, 0.1, "cm")) +
   labs(title = toupper("Rladies en el mundo"),
@@ -148,16 +143,15 @@ map4 <- world2 +
              data = capitulos_rladies, colour = "#88398A", alpha = .5) +     #562457#88398A
   scale_size_continuous(range = c(1, 8), breaks = c(250, 500,1000,1500,2000)) +
   labs(size = 'Miembros Meetups') +
-  # set theme of graph - use the futura font
-  #theme(background = wes_palette("Chevalier1")[3], foreground = NA, base_family = "FuturaBT-BoldCondensed") +
+
   # set all other themes and labels like any old ggplot
-  theme(#legend.text = element_text(colour = actor_colour, face = "bold", size = 12),
-    #legend.title = element_text(colour = actor_colour, face = "bold", size = 12),
+  theme(legend.text = element_text(colour = color_letra, face = "bold", size = 12),
+    legend.title = element_text(colour = color_letra, face = "bold", size = 12),
     legend.title.align = 1,
     legend.background = element_rect(fill =  wes_palette("Chevalier1")[3]),  #colour = actor_colour, 
     plot.background = element_rect(fill = "#D3DDDC", colour = "#D3DDDC"),
     plot.title = element_text(colour = wes_palette("GrandBudapest1")[2], size = 22, hjust = 0.5, family = "FuturaBT-ExtraBlack", face="bold"),
-    #plot.subtitle = element_text(colour = actor_colour, size = 16, hjust = 0.5,family = "FuturaBT-ExtraBlack", face="italic"),
+    plot.subtitle = element_text(colour = color_letra, size = 16, hjust = 0.5,family = "FuturaBT-ExtraBlack", face="italic"),
     plot.caption = element_text(colour =  wes_palette("GrandBudapest1")[2], size = 10, hjust = 0.5,face="bold"),
     plot.margin = margin(0.8, 0.1, 0.5, 0.1, "cm")) +
   labs(title = toupper("Rladies en el mundo"),
@@ -192,17 +186,12 @@ map7 <- world2 +
     plot.title = element_text(colour = wes_palette("GrandBudapest1")[2], size = 22, hjust = 0.5, family = "FuturaBT-ExtraBlack", face="bold"),#wes_palette("GrandBudapest1")[2]
     plot.subtitle = element_text(colour = "#446455", size = 14, hjust = 0.5,family = "FuturaBT-ExtraBlack", face="italic"),
     plot.caption = element_text(colour =  wes_palette("GrandBudapest1")[2], size = 10, hjust = 0.5,face="bold", vjust=1))+
-    #plot.margin = margin(0.5, 0.1, 0.5, 0.1, "cm")) +
-  labs(title = toupper("Rladies en el mundo"),
+    labs(title = toupper("Rladies en el mundo"),
        subtitle = "Cantidad de miembros por capÃ­tulo hasta el 25 de junio del 2019",
        caption = "#DatosDeMiercoles por Patricia Loto")
 
 map7
-plotly (map7)
-
-
-
-
+ggplotly (map7)
 
 #transition_time(importaXP) +
 #  ease_aes('linear')+
@@ -227,4 +216,4 @@ map7 <- world2 +
                                            size = miembros, alpha = miembros, colour = "#88398A")) +     #562457#88398A  #alpha = .5
   scale_size_continuous(range = c(1, 10), breaks = c(250, 500,1000,1500,2000)) +
   # scale_color_continuous(option="purple", trans="log", breaks=c(250, 500, 750, 1000,1250,1500,1750,2000)) +
-  scale_alpha_continuous(trans="log") +
+  scale_alpha_continuous(trans="log") 
