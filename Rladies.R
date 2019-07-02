@@ -142,7 +142,9 @@ map4 <- world2 +
                  text = paste('city: ', ciudad,
                               '<br /> created : ', creacion),
                  size = miembros),
-             data = capitulos_rladies, colour = "#88398A", alpha = .5) +     #562457#88398A
+             data = capitulos_rladies, colour = "#88398A", alpha = .5) +     #562457# plot.title = element_text(colour = wes_palette("GrandBudapest1")[2], size = 22, hjust = 0.5, family = "FuturaBT-ExtraBlack"),
+  plot.subtitle = element_text(colour = color_letra, size = 16, hjust = 0.5),
+plot.caption = element_text(colour =  wes_palette("GrandBudapest1")[2], size = 12, hjust = 0.5),
   scale_size_continuous(range = c(1, 8), breaks = c(250, 500,1000,1500,2000)) +
   labs(size = 'Miembros Meetups') +
 
