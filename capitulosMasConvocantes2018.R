@@ -6,8 +6,7 @@ library(lubridate)
 library(LaCroixColoR)
 library(png)
 library(grid)
-install.packages("fonts")
-install.packages("themes")
+
 
 eventos_rladies <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-06-26/eventos_rladies.csv")
 
