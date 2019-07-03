@@ -107,33 +107,7 @@ ggplot(top20convocantes, aes(reorder(capitulo, totalasist), totalasist, fill=(ca
  ggsave("Tangerine.png",width = 10, height = 5, dpi = "retina")
 
 
-p <-asistentesXYearCap%>%arrange(anio,totalasist)%>%
-ggplot(aes(x = reorder(anio, totalasist), fill = capitulo))+
-  geom_col(show.legend = TRUE) + 
-  scale_size(range = c(2, 1500))+
- #scale_size_continuous(range = c(1, 8), breaks = c(250, 500, 750, 1000,1250,1500,1750,2000)) +
-  scale_color_manual(values = pal_1) +
-  scale_fill_manual(values = pal_1) +
- coord_flip() + 
-  labs(x = "",
-       y = "",
-       title = "Asistentes por Año en Meeetups de RLadies",
-       subtitle = "Período: 2012-2019",
-       caption = "DatosDeMiercoles por Patricia Loto ")+
-  #theme(legend.position = "bottom")+
-  #coord_flip() +
-  theme_light() +
-  theme(legend.position = "bottom",text = element_text(family = " Vivaldi"),
-        legend.position = "NA",
-        panel.grid = element_blank(),
-        plot.title = element_text(colour = "#562457", size = 22, hjust = 0.5, family = "Palatino Linotype",face="bold"),
-        plot.subtitle = element_text(colour = "grey", size = 16, hjust = 0.5),
-        plot.caption = element_text(colour =  wes_palette("Darjeeling2")[2], size = 8, hjust = 0.5, face="bold"),
-        axis.title = element_text(size = 14),
-        axis.text = element_text(size = 12)
-  )
-ggsave("asistentesAlAnio.png",width = 10, height = 5, dpi = "retina")
-p
+
 
 
 
