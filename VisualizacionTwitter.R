@@ -14,7 +14,7 @@ library(gganimate)
 
 #Lectura de datos
 capitulos_rladies <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-06-26/capitulos_rladies.csv")
-
+View(capitulos_rladies)
 #Muestro los datos en formato de tabla con el paquete DT
 datatable(capitulos_rladies, rownames = FALSE,
           options = list(pageLength = 10))
