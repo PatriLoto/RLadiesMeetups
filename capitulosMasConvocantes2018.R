@@ -1,11 +1,11 @@
 extrafont::loadfonts(device = "win")
 library(tidyverse)
-library(paletteer)
-library("LaCroixColoR")
+#library(paletteer)
 library(lubridate)
 library(LaCroixColoR)
 library(png)
 library(grid)
+library(DT)
 
 
 eventos_rladies <- readr::read_csv("https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2019/2019-06-26/eventos_rladies.csv")
@@ -34,6 +34,7 @@ View(asistentes2018XCap)
 #renombro el capitulo de Warsaw
 asistentes2018XCap[asistentes2018XCap$capitulo == "Spotkania Entuzjastów R-Warsaw RUG Meetup & R-Ladies Warsaw",1]<-"R-Ladies Warsaw"
 
+#Top 20 de convocatoria
 top20convocantes <-asistentes2018XCap %>%arrange(desc(totalasist)) %>% head(20)                 #top_n(-10)
 View(top20convocantes)
 
