@@ -13,26 +13,26 @@ eventos_rladies <- readr::read_csv("https://raw.githubusercontent.com/cienciaded
 datatable(eventos_rladies, rownames = FALSE,
           options = list(pageLength = 10))
 
-#total de asistentes desde su creación al 25 de junio del 2019
+#total de asistentes desde su creaciÃ³n al 25 de junio del 2019
 asistentesXCap <-eventos_rladies %>% group_by(capitulo)%>% summarise(totalasist=sum(respuesta_asistire))%>% arrange(desc(totalasist))
 View(asistentesXCap)
 
-#total de asistentes ordenado por año y cantidad de asistentes desde su creación al 25 de junio del 2019
+#total de asistentes ordenado por aÃ±o y cantidad de asistentes desde su creaciÃ³n al 25 de junio del 2019
 asistentesXYearCantidad<-eventos_rladies %>% group_by(capitulo, anio=year(fecha_local))%>% summarise(totalasist=sum(respuesta_asistire))%>% arrange(desc(anio,totalasist))
 View(asistentesXYearCantidad)
 
-#total de asistentes ordenado por año y capitulo desde su creación al 25 de junio del 2019
+#total de asistentes ordenado por aÃ±o y capitulo desde su creaciÃ³n al 25 de junio del 2019
 asistentesXYearCap <-eventos_rladies %>% group_by(capitulo, anio=year(fecha_local))%>% summarise(totalasist=sum(respuesta_asistire))%>% arrange(anio,totalasist)
 View(asistentesXYearCap)
-asistentesXYearCap[asistentesXYearCap$capitulo == "Spotkania Entuzjastów R-Warsaw RUG Meetup & R-Ladies Warsaw",1]<-"R-Ladies Warsaw"
+asistentesXYearCap[asistentesXYearCap$capitulo == "Spotkania EntuzjastÃ³w R-Warsaw RUG Meetup & R-Ladies Warsaw",1]<-"R-Ladies Warsaw"
 
-#capítulos con más convocatoria durante el 2018
+#capÃ­tulos con mÃ¡s convocatoria durante el 2018
 asistentes2018XCap <-filter(asistentesXYearCap, anio==2018)%>%arrange(desc(totalasist))
 asistentes2018XCap
 View(asistentes2018XCap)
 
 #renombro el capitulo de Warsaw
-asistentes2018XCap[asistentes2018XCap$capitulo == "Spotkania Entuzjastów R-Warsaw RUG Meetup & R-Ladies Warsaw",1]<-"R-Ladies Warsaw"
+asistentes2018XCap[asistentes2018XCap$capitulo == "Spotkania EntuzjastÃ³w R-Warsaw RUG Meetup & R-Ladies Warsaw",1]<-"R-Ladies Warsaw"
 
 #Top 20 de convocatoria
 top20convocantes <-asistentes2018XCap %>%arrange(desc(totalasist)) %>% head(20)                 #top_n(-10)
@@ -59,8 +59,8 @@ p20 <-ggplot(top20convocantes, aes(reorder(capitulo, totalasist), totalasist, fi
         axis.text = element_text(size = 12)) +  #colour = "#88398A",face = "bold"
   labs(x = "",
        y = "Asistentes",
-       title = "Capítulos con mayor convocatoria durante 2018",
-       subtitle = "Dos son de latinoamérica",
+       title = "CapÃ­tulos con mayor convocatoria durante 2018",
+       subtitle = "Dos son de latinoamÃ©rica",
        caption =
          "Data: #DatosDeMiercoles \n por Patricia Loto")
 p20
@@ -71,7 +71,7 @@ marca <- rasterGrob(img, interpolate=F,height=unit(3, "cm"),hjust=-2.2, vjust=1.
 pmarca <-p20 + annotation_custom(marca,xmin=-Inf, xmax=Inf, ymin=-Inf, ymax=Inf)
 ggsave("blueberry6.png",width = 10, height = 5, dpi = "retina")
 
-# en breve terminaré la animacion
+# animacion
 library(gganimate)
 pmarca+
   transition_time(totalasist) +
@@ -99,36 +99,10 @@ ggplot(top20convocantes, aes(reorder(capitulo, totalasist), totalasist, fill=(ca
   ) +
   labs(x = "",
        y = "Cantidad asistentes",
-       title = "Capítulos con mayor convocatoria durante 2018",
-       subtitle = "Dos son de latinoamérica",
+       title = "CapÃ­tulos con mayor convocatoria durante 2018",
+       subtitle = "Dos son de latinoamÃ©rica",
        caption =
          "Data: #DatosDeMiercoles \n por Patricia Loto")
 
  ggsave("Tangerine.png",width = 10, height = 5, dpi = "retina")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
