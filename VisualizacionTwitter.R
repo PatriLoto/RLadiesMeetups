@@ -1,4 +1,4 @@
-#Importo librerías
+#Importo librerÃ­as
 
 library(extrafont)
 loadfonts(dev = "win")
@@ -32,7 +32,7 @@ mundo
 #colores de las paletas wes anderson
 wes_palettes <- names(wesanderson::wes_palettes)
 View(wes_palettes)
-# extraigo los colores de todas las paletas de WesAnderson con sus correspondientes nombres (lo tomé del código de @committedtotape)
+# extraigo los colores de todas las paletas de WesAnderson con sus correspondientes nombres (lo tomÃ© del cÃ³digo de @committedtotape)
 wes_paleta_func <- function(pal) {
   col_df <- tibble(colores = wes_palette(pal), palette = pal)
   }
@@ -64,7 +64,7 @@ mapaRladies <- mundo +
         plot.subtitle = element_text(colour = "#446455", size = 14, hjust = 0.5,family = "FuturaBT-ExtraBlack", face="italic"),
         plot.caption = element_text(colour =  wes_palette("GrandBudapest1")[2], size = 10, hjust = 0.5,face="bold", vjust=1))+
   labs(title = toupper("Rladies en el mundo"),
-       subtitle = "Cantidad de miembros por capítulo hasta el 25 de junio del 2019",
+       subtitle = "Cantidad de miembros por capÃ­tulo hasta el 25 de junio del 2019",
        caption = "#DatosDeMiercoles por Patricia Loto")
 
 mapaRladies
@@ -87,13 +87,13 @@ mapaRladies2 <- mundo +
         legend.title = element_text(colour = "#446455", size = 10),   #lila oscuro de RLadies="#446455"
         legend.title.align = 1,
         legend.background = element_rect(fill = wes_palette("Darjeeling2")[4], colour =NA),  
-        panel.background = element_rect(fill = wes_palewes_palette("Darjeeling2")[4], colour = wes_palette("Darjeeling2")[4]),    
+        panel.background = element_rect(fill = wes_palette("Darjeeling2")[4], colour = wes_palette("Darjeeling2")[4]),    
         plot.title = element_text(colour ="#562457" , size = 22, hjust = 0.5, family = "FuturaBT-ExtraBlack", face="bold"),	
       
         plot.subtitle = element_text(colour = "#446455", size = 14, hjust = 0.5,family = "FuturaBT-ExtraBlack", face="italic"),
         plot.caption = element_text(colour =  wes_palette("GrandBudapest1")[2], size = 10, hjust = 0.5,face="bold", vjust=1))+
   labs(title = toupper("Rladies en el mundo"),
-       subtitle = "Cantidad de miembros por capítulo hasta el 25 de junio del 2019",
+       subtitle = "Cantidad de miembros por capÃ­tulo hasta el 25 de junio del 2019",
        caption = "#DatosDeMiercoles por Patricia Loto")
 
 mapaRladies2
@@ -101,7 +101,7 @@ p <-ggplotly(mapaRladies2, hoverformat='2.F', tooltip = "text")
 p
 
 #-------------------------------------
-# Animación
+# AnimaciÃ³n
 #------------------------------------
 library(gganimate)
  mapaRladies+
